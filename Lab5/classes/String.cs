@@ -43,12 +43,18 @@ namespace Lab5.classes.Class1 {
 
         public int CompareTo(object obj)
         {
-            throw new NotImplementedException();
+            if (obj == null) return 1;
+            StringBase stringObj = obj as StringBase;
+            if (stringObj != null)
+                return this.length.CompareTo(stringObj.Length);
+            else
+                throw new ArgumentException("Object is not a StringBase class");
+            //throw new NotImplementedException();
         }
 
         public object Clone()
         {
-            throw new NotImplementedException();
+            return this.Clone();
         }
 
         public static bool operator >(StringBase first, StringBase second)

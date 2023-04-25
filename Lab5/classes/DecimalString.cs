@@ -52,12 +52,18 @@ namespace Lab5.classes.Class2 {
 
         public int CompareTo(object obj)
         {
-            throw new NotImplementedException();
+            if (obj == null) return 1;
+            DecimalString stringObj = obj as DecimalString;
+            if (stringObj != null)
+                return this.chars.ToString().CompareTo(stringObj.chars.ToString());
+            else
+                throw new ArgumentException("Object is not a StringBase class");
+            //throw new NotImplementedException();
         }
 
         public object Clone()
         {
-            throw new NotImplementedException();
+            return this.Clone();
         }
 
         public static bool operator> (DecimalString first, DecimalString second) {
