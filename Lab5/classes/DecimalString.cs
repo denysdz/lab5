@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Lab5.classes.Class1;
+using Lab5.classes.InterfaceString;
 
 namespace Lab5.classes.Class2 {
-    class DecimalString : StringBase {
+    class DecimalString : StringBase, IString, IComparable, ICloneable {
 
         public DecimalString(string str) {
             if (IsValidDecimalString(str)) {
@@ -32,7 +33,7 @@ namespace Lab5.classes.Class2 {
             return true;
         }
 
-        public override string ToString() {
+        public string ToString() {
             return new string(chars);
         }
 
@@ -49,6 +50,15 @@ namespace Lab5.classes.Class2 {
             }
         }
 
+        public int CompareTo(object obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        public object Clone()
+        {
+            throw new NotImplementedException();
+        }
 
         public static bool operator> (DecimalString first, DecimalString second) {
             int a = int.Parse(first.ToString());

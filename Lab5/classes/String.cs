@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lab5.classes.InterfaceString;
 
 namespace Lab5.classes.Class1 {
-    class StringBase
-    {
+    class StringBase : IString, IComparable, ICloneable {
 
         protected byte length;
         protected char[] chars;
@@ -41,6 +41,16 @@ namespace Lab5.classes.Class1 {
             chars = new char[0];
         }
 
+        public int CompareTo(object obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        public object Clone()
+        {
+            throw new NotImplementedException();
+        }
+
         public static bool operator >(StringBase first, StringBase second)
         {
             int comparison = String.Compare(first.ToString(), second.ToString(), comparisonType: StringComparison.OrdinalIgnoreCase);
@@ -53,7 +63,7 @@ namespace Lab5.classes.Class1 {
             return comparison < 0;
         }
 
-        public virtual string ToString()
+        public string ToString()
         {
             return null;
         }
