@@ -40,6 +40,12 @@
             this.strLength = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.compareStr = new System.Windows.Forms.Label();
+            this.arrayList = new System.Windows.Forms.ListBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.sortArray = new System.Windows.Forms.ListBox();
+            this.checkbox = new System.Windows.Forms.CheckBox();
+            this.sortOrder = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -147,11 +153,73 @@
             this.compareStr.Size = new System.Drawing.Size(0, 16);
             this.compareStr.TabIndex = 11;
             // 
+            // arrayList
+            // 
+            this.arrayList.FormattingEnabled = true;
+            this.arrayList.ItemHeight = 16;
+            this.arrayList.Location = new System.Drawing.Point(336, 89);
+            this.arrayList.Name = "arrayList";
+            this.arrayList.Size = new System.Drawing.Size(234, 244);
+            this.arrayList.TabIndex = 12;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(333, 57);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(130, 16);
+            this.label3.TabIndex = 13;
+            this.label3.Text = "Початковий масив";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(597, 58);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(148, 16);
+            this.label4.TabIndex = 14;
+            this.label4.Text = "Відсортований масив";
+            // 
+            // sortArray
+            // 
+            this.sortArray.FormattingEnabled = true;
+            this.sortArray.ItemHeight = 16;
+            this.sortArray.Location = new System.Drawing.Point(597, 89);
+            this.sortArray.Name = "sortArray";
+            this.sortArray.Size = new System.Drawing.Size(211, 244);
+            this.sortArray.TabIndex = 15;
+            // 
+            // checkbox
+            // 
+            this.checkbox.AutoSize = true;
+            this.checkbox.Location = new System.Drawing.Point(521, 354);
+            this.checkbox.Name = "checkbox";
+            this.checkbox.Size = new System.Drawing.Size(160, 20);
+            this.checkbox.TabIndex = 16;
+            this.checkbox.Text = "У порядку спадання";
+            this.checkbox.UseVisualStyleBackColor = true;
+            // 
+            // sortOrder
+            // 
+            this.sortOrder.Location = new System.Drawing.Point(545, 390);
+            this.sortOrder.Name = "sortOrder";
+            this.sortOrder.Size = new System.Drawing.Size(89, 31);
+            this.sortOrder.TabIndex = 17;
+            this.sortOrder.Text = "Sort";
+            this.sortOrder.UseVisualStyleBackColor = true;
+            this.sortOrder.Click += new System.EventHandler(this.sortOrder_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(385, 450);
+            this.ClientSize = new System.Drawing.Size(894, 450);
+            this.Controls.Add(this.sortOrder);
+            this.Controls.Add(this.checkbox);
+            this.Controls.Add(this.sortArray);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.arrayList);
             this.Controls.Add(this.compareStr);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.strLength);
@@ -185,6 +253,12 @@
         private System.Windows.Forms.Label strLength;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label compareStr;
+        private System.Windows.Forms.ListBox arrayList;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ListBox sortArray;
+        private System.Windows.Forms.CheckBox checkbox;
+        private System.Windows.Forms.Button sortOrder;
     }
 }
 

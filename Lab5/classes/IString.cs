@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lab5.classes.IString
+namespace Lab5.classes.InterfaceString
 {
     internal interface IString
     {

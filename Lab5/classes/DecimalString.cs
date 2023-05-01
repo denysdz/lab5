@@ -9,6 +9,8 @@ using Lab5.classes.InterfaceString;
 namespace Lab5.classes.Class2 {
     class DecimalString : StringBase, IString, IComparable, ICloneable {
 
+
+
         public DecimalString(string str) {
             if (IsValidDecimalString(str)) {
                 length = (byte)str.Length;
@@ -18,6 +20,11 @@ namespace Lab5.classes.Class2 {
                 chars = new char[0];
             }
         }
+
+        int getValue() {
+            return int.Parse(this.ToString()); 
+        }
+
         public DecimalString(int number) : this(number.ToString()) { }
 
         private static bool IsValidDecimalString(string str) {
@@ -55,15 +62,15 @@ namespace Lab5.classes.Class2 {
             if (obj == null) return 1;
             DecimalString stringObj = obj as DecimalString;
             if (stringObj != null)
-                return this.chars.ToString().CompareTo(stringObj.chars.ToString());
+                return stringObj.getValue().CompareTo(this.getValue());
             else
                 throw new ArgumentException("Object is not a StringBase class");
             //throw new NotImplementedException();
         }
 
-        public object Clone()
+        public DecimalString Clone()
         {
-            return this.Clone();
+            return (DecimalString) this.MemberwiseClone();
         }
 
         public static bool operator> (DecimalString first, DecimalString second) {

@@ -15,8 +15,28 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 namespace Lab5
 {
     public partial class Form1 : Form {
+
+        private static readonly Random rnd = new Random();
+        DecimalString[] decimalStrings = new DecimalString[10];
+
         public Form1() {
             InitializeComponent();
+
+            for (int i = 0; i < 5; i++) {
+                decimalStrings[i] = new DecimalString(GetRandom());
+            }
+            for (int i=5; i<10; i++) {
+                decimalStrings[i] = decimalStrings[i - 5].Clone();
+            }
+            foreach (DecimalString decimalString in decimalStrings)
+            {
+                arrayList.Items.Add(decimalString.ToString());
+            }
+        }
+
+        private int GetRandom() {
+            int value = rnd.Next(-100, 100);
+            return value;
         }
 
         private void button1_Click(object sender, EventArgs e) {
@@ -35,7 +55,6 @@ namespace Lab5
         }
 
 
-
         private void TextBoxError(string message) {
             MessageBoxButtons buttons = MessageBoxButtons.OK;
             DialogResult result;
@@ -44,6 +63,8 @@ namespace Lab5
 
         private void button3_Click(object sender, EventArgs e)
         {
+
+
             if (secondDecimal.Text.Length > 0 && firstDecimal.Text.Length > 0) {
                 DecimalString firstArg = new DecimalString(firstDecimal.Text.ToString());
                 DecimalString secondArg = new DecimalString(secondDecimal.Text.ToString());
@@ -117,6 +138,21 @@ namespace Lab5
 
             } else {
                 TextBoxError("Заповніть обидві десяткові стрічки стрічки!");
+            }
+        }
+
+        private void sortOrder_Click(object sender, EventArgs e) {
+            sortArray.Items.Clear();
+            if (checkbox.Checked) {
+                Array.Sort<DecimalString>(decimalStrings, new Comparison<DecimalString>(
+                     (i1, i2) => i1.CompareTo(i2)));
+            } else {
+                Array.Sort<DecimalString>(decimalStrings, new Comparison<DecimalString>(
+                    (i1, i2) => i2.CompareTo(i1)));
+            }
+            foreach (DecimalString decimalString in decimalStrings)
+            {
+                sortArray.Items.Add(decimalString.ToString());
             }
         }
     }
