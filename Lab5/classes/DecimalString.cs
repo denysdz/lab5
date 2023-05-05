@@ -9,8 +9,6 @@ using Lab5.classes.InterfaceString;
 namespace Lab5.classes.Class2 {
     class DecimalString : StringBase, IString, IComparable, ICloneable {
 
-
-
         public DecimalString(string str) {
             if (IsValidDecimalString(str)) {
                 length = (byte)str.Length;

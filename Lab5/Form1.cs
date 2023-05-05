@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Lab5.classes;
 using Lab5.classes.Class1;
 using Lab5.classes.Class2;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -17,6 +18,7 @@ namespace Lab5
     public partial class Form1 : Form {
 
         private static readonly Random rnd = new Random();
+        private DecimalStringCollection decimalStringsCollection = new DecimalStringCollection();
         DecimalString[] decimalStrings = new DecimalString[10];
 
         public Form1() {
@@ -145,10 +147,10 @@ namespace Lab5
             sortArray.Items.Clear();
             if (checkbox.Checked) {
                 Array.Sort<DecimalString>(decimalStrings, new Comparison<DecimalString>(
-                     (i1, i2) => i1.CompareTo(i2)));
+                     (i1, i2) => i2.CompareTo(i1)));
             } else {
                 Array.Sort<DecimalString>(decimalStrings, new Comparison<DecimalString>(
-                    (i1, i2) => i2.CompareTo(i1)));
+                    (i1, i2) => i1.CompareTo(i2)));
             }
             foreach (DecimalString decimalString in decimalStrings)
             {

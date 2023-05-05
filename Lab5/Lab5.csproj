@@ -47,6 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="classes\DecimalString.cs" />
+    <Compile Include="classes\DecimalStringCollection.cs" />
+    <Compile Include="classes\EngineCalcCollection.cs" />
+    <Compile Include="classes\EngineeringСalculator.cs" />
     <Compile Include="classes\IString.cs" />
     <Compile Include="classes\String.cs" />
     <Compile Include="Form1.cs">
