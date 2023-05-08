@@ -7,27 +7,43 @@ using System.Threading.Tasks;
 namespace Lab5.classes {
 
     class EngineeringСalculator {
-        public int Id { get; set; }
+
+        private List<String> operations;
         public string Name { get; set; }
 
-        public EngineeringСalculator(int id, string name) {
-            Id = id;
+        public EngineeringСalculator(string name) {
             Name = name;
+            this.operations = new List<String>();
+        }
+        public IEnumerator<string> GetOperationsEnumerator() {
+            return operations.GetEnumerator();
         }
 
         public double Add(double a, double b) {
-            return a + b;
+            double result = a + b;
+            String record = a.ToString() + "+" + b.ToString() + "=" + result.ToString(); 
+            operations.Add(record);
+            return result;
         }
 
         public double Subtract(double a, double b) {
-            return a - b;
+            double result = a - b;
+            String record = a.ToString() + "-" + b.ToString() + "=" + result.ToString();
+            operations.Add(record);
+            return result;
         }
 
         public double Multiply(double a, double b) {
-            return a * b;
+            double result = a * b;
+            String record = a.ToString() + "*" + b.ToString() + "=" + result.ToString();
+            operations.Add(record);
+            return result;
         }
 
         public double Divide(double a, double b) {
+            double result = a / b;
+            String record = a.ToString() + "/" + b.ToString() + "=" + result.ToString();
+            operations.Add(record);
             return a / b;
         }
 

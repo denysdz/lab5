@@ -25,16 +25,6 @@ namespace Lab5.classes {
             nonGenericCollection.Add(item);
         }
 
-        public void DisplayElementInfo(int index) {
-            if (index >= 0 && index < genericCollection.Count) {
-                DecimalString element = genericCollection[index];
-                Console.WriteLine($"Element at index {index}: {element.ToString()}");
-            }
-            else {
-                Console.WriteLine("Index is out of range.");
-            }
-        }
-
         public IEnumerator<DecimalString> GetEnumerator() {
             return genericCollection.GetEnumerator();
         }

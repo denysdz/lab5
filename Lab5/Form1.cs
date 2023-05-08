@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,22 +19,12 @@ namespace Lab5
     public partial class Form1 : Form {
 
         private static readonly Random rnd = new Random();
+        private EngineeringСalculator engineeringСalculator = null;
         private DecimalStringCollection decimalStringsCollection = new DecimalStringCollection();
-        DecimalString[] decimalStrings = new DecimalString[10];
+        private EngineCalcCollection engineeringСalculators= new EngineCalcCollection();
 
         public Form1() {
             InitializeComponent();
-
-            for (int i = 0; i < 5; i++) {
-                decimalStrings[i] = new DecimalString(GetRandom());
-            }
-            for (int i=5; i<10; i++) {
-                decimalStrings[i] = decimalStrings[i - 5].Clone();
-            }
-            foreach (DecimalString decimalString in decimalStrings)
-            {
-                arrayList.Items.Add(decimalString.ToString());
-            }
         }
 
         private int GetRandom() {
@@ -51,11 +42,35 @@ namespace Lab5
                 else
                     strResult.Text = decimalString.ToString();
                 strLength.Text = decimalString.Length.ToString();
+                decimalStringsCollection.AddToGenericCollection(decimalString);
+                decimalStringsCollection.AddToNonGenericCollection(decimalString);
+                updateLists();
             } else {
-                TextBoxError("Заповніть першу десяткову стрічку!");
+                TextBoxError("Заповніть десяткову стрічку!");
             }
         }
 
+        private void updateLists () {
+            arrayList.Items.Clear();
+            sortArray.Items.Clear();
+            IEnumerator entry = decimalStringsCollection.GetEnumerator();
+            while (entry.MoveNext()) {
+                DecimalString obj = entry.Current as DecimalString;
+                if (obj.ToString().Equals("")) {
+                    arrayList.Items.Add("Пусто");
+                } else {
+                    arrayList.Items.Add(obj.ToString());
+                }
+            }
+            foreach (DecimalString e in decimalStringsCollection) {
+                if (e.ToString().Equals("")) {
+                    sortArray.Items.Add("Пусто");
+                }
+                else {
+                    sortArray.Items.Add(e.ToString());
+                }
+            }
+        }
 
         private void TextBoxError(string message) {
             MessageBoxButtons buttons = MessageBoxButtons.OK;
@@ -63,98 +78,131 @@ namespace Lab5
             result = MessageBox.Show(message, "Помилка валідації!", buttons);
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-
-
-            if (secondDecimal.Text.Length > 0 && firstDecimal.Text.Length > 0) {
-                DecimalString firstArg = new DecimalString(firstDecimal.Text.ToString());
-                DecimalString secondArg = new DecimalString(secondDecimal.Text.ToString());
-                if (firstArg.Length == 0 || secondArg.Length == 0) {
-                    StringBase firstBase = new StringBase(firstDecimal.Text.ToString());
-                    StringBase secondBase = new StringBase(secondDecimal.Text.ToString());
-                    if (firstBase < secondBase)
-                    {
-                        compareStr.Text = "Перша стрічка менша другої";
-                    }
-                    else
-                    {
-                        compareStr.Text = "Перша стрічка більша або рівна другій";
-                    }
+        private bool isCorrectNumber (String value) {
+            double number;
+            if (value.Length > 0) {
+               if (double.TryParse(value, out number)) {
+                    return true;
                 } else {
-                    if (firstArg < secondArg)
-                        compareStr.Text = "Перша стрічка менша другої";
-                    else
-                        compareStr.Text = "Перша стрічка більша або рівна другій";
+                    TextBoxError("Введіть коректні дійсні числа!");
                 }
             } else {
-                TextBoxError("Заповніть обидві десяткові стрічки стрічки!");
+               TextBoxError("Введіть значення x, y! ");
             }
-
+            return false;
         }
 
-        private void button4_Click(object sender, EventArgs e)
-        {
-            if (secondDecimal.Text.Length > 0 && firstDecimal.Text.Length > 0) {
-                DecimalString firString = new DecimalString(firstDecimal.Text.ToString());
-                DecimalString secString = new DecimalString(secondDecimal.Text.ToString());
-                try
-                {
-                    compareStr.Text = "Різниця стрічок: " + firString.Difference(secString).ToString();
-                } catch (ArgumentException ex)
-                {
-                    compareStr.Text = ex.Message;
-                }
-            } else {
-                TextBoxError("Заповніть обидві десяткові стрічки стрічки!");
-            }
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            if (secondDecimal.Text.Length > 0 && firstDecimal.Text.Length > 0) {
-
-
-                DecimalString firstArg = new DecimalString(firstDecimal.Text.ToString());
-                DecimalString secondArg = new DecimalString(secondDecimal.Text.ToString());
-                if (firstArg.Length == 0 || secondArg.Length == 0)
-                {
-                    StringBase firstBase = new StringBase(firstDecimal.Text.ToString());
-                    StringBase secondBase = new StringBase(secondDecimal.Text.ToString());
-                    if (firstBase > secondBase)
-                    {
-                        compareStr.Text = "Перша стрічка більша другої";
+        private void addBtnOp_Click(object sender, EventArgs e) {
+            if (isCorrectNumber(val1.Text.ToString()) && isCorrectNumber(val2.Text.ToString())) {
+                if (nameCalc.Text.Length > 0) {
+                    if (engineeringСalculator == null) {
+                        engineeringСalculator = new EngineeringСalculator(nameCalc.Text.ToString());
                     }
-                    else
-                    {
-                        compareStr.Text = "Перша стрічка менша або рівна другій";
-                    }
+                    double a = Convert.ToDouble(val1.Text.ToString());
+                    double b = Convert.ToDouble(val2.Text.ToString());
+                    resultCalc.Text = val1.Text.ToString() + " + " + val2.Text.ToString() + " = " + engineeringСalculator.Add(a, b).ToString();
+                } else {
+                    TextBoxError("Вкажіть ім'я калькулятора!");
                 }
-                else
-                {
-                    if (firstArg < secondArg)
-                        compareStr.Text = "Перша стрічка менша другої";
-                    else
-                        compareStr.Text = "Перша стрічка більша або рівна другій";
-                }
-
-            } else {
-                TextBoxError("Заповніть обидві десяткові стрічки стрічки!");
             }
         }
 
-        private void sortOrder_Click(object sender, EventArgs e) {
-            sortArray.Items.Clear();
-            if (checkbox.Checked) {
-                Array.Sort<DecimalString>(decimalStrings, new Comparison<DecimalString>(
-                     (i1, i2) => i2.CompareTo(i1)));
-            } else {
-                Array.Sort<DecimalString>(decimalStrings, new Comparison<DecimalString>(
-                    (i1, i2) => i1.CompareTo(i2)));
+        private void updateEngLists () {
+            listBox1.Items.Clear();
+            listBox2.Items.Clear();
+            IEnumerator entry = engineeringСalculators.GetEnumerator();
+            while (entry.MoveNext()) {
+                EngineeringСalculator obj = entry.Current as EngineeringСalculator;
+                listBox1.Items.Add(obj.Name);
+                listBox1.Items.Add("Історія:");
+                IEnumerator history = obj.GetOperationsEnumerator();
+                while (history.MoveNext()) {
+                    String data = history.Current as String;
+                    listBox1.Items.Add(data);
+                }
             }
-            foreach (DecimalString decimalString in decimalStrings)
-            {
-                sortArray.Items.Add(decimalString.ToString());
+            foreach (EngineeringСalculator obj in engineeringСalculators) {
+                listBox2.Items.Add(obj.Name);
+                listBox2.Items.Add("Історія:");
+                IEnumerator history = obj.GetOperationsEnumerator();
+                while (history.MoveNext()) {
+                    String data = history.Current as String;
+                    listBox2.Items.Add(data);
+                }
+            }
+        }
+
+        private void saveCollections () {
+            int key1 = engineeringСalculators.GetLastGenereticKey();
+            int key2 = engineeringСalculators.GetLastNonGenereticKey();
+            engineeringСalculators.AddToGenericCollection(key1 + 1, engineeringСalculator);
+            engineeringСalculators.AddToNonGenericCollection(key2 + 1, engineeringСalculator);
+            engineeringСalculator = null;
+            updateEngLists();
+        }
+        private void saveToCollections_Click(object sender, EventArgs e) {
+            if (engineeringСalculator != null) {
+                val1.Text = "";
+                val2.Text = "";
+                saveCollections();
+            } else {
+                if (nameCalc.Text.Length > 0) {
+                    engineeringСalculator = new EngineeringСalculator(nameCalc.Text.ToString());
+                    val1.Text = "";
+                    val2.Text = "";
+                    resultCalc.Text = "";
+                    saveCollections();
+                } else {
+                    TextBoxError("Вкажіть ім'я калькулятора!");
+                }
+            }
+        }
+
+        private void SubstrBtnOp_Click(object sender, EventArgs e) {
+            if (isCorrectNumber(val1.Text.ToString()) && isCorrectNumber(val2.Text.ToString())) {
+                if (nameCalc.Text.Length > 0) {
+                    if (engineeringСalculator == null) {
+                        engineeringСalculator = new EngineeringСalculator(nameCalc.Text.ToString());
+                    }
+                    double a = Convert.ToDouble(val1.Text.ToString());
+                    double b = Convert.ToDouble(val2.Text.ToString());
+                    resultCalc.Text = val1.Text.ToString() + " - " + val2.Text.ToString() + " = " + engineeringСalculator.Subtract(a, b).ToString();
+                }
+                else {
+                    TextBoxError("Вкажіть ім'я калькулятора!");
+                }
+            }
+        }
+
+        private void multiBtn_Click(object sender, EventArgs e) {
+            if (isCorrectNumber(val1.Text.ToString()) && isCorrectNumber(val2.Text.ToString())) {
+                if (nameCalc.Text.Length > 0) {
+                    if (engineeringСalculator == null) {
+                        engineeringСalculator = new EngineeringСalculator(nameCalc.Text.ToString());
+                    }
+                    double a = Convert.ToDouble(val1.Text.ToString());
+                    double b = Convert.ToDouble(val2.Text.ToString());
+                    resultCalc.Text = val1.Text.ToString() + " * " + val2.Text.ToString() + " = " + engineeringСalculator.Multiply(a, b).ToString();
+                }
+                else {
+                    TextBoxError("Вкажіть ім'я калькулятора!");
+                }
+            }
+        }
+
+        private void dividBtn_Click(object sender, EventArgs e) {
+            if (isCorrectNumber(val1.Text.ToString()) && isCorrectNumber(val2.Text.ToString())) {
+                if (nameCalc.Text.Length > 0) {
+                    if (engineeringСalculator == null) {
+                        engineeringСalculator = new EngineeringСalculator(nameCalc.Text.ToString());
+                    }
+                    double a = Convert.ToDouble(val1.Text.ToString());
+                    double b = Convert.ToDouble(val2.Text.ToString());
+                    resultCalc.Text = val1.Text.ToString() + " / " + val2.Text.ToString() + " = " + engineeringСalculator.Divide(a, b).ToString();
+                }
+                else {
+                    TextBoxError("Вкажіть ім'я калькулятора!");
+                }
             }
         }
     }
